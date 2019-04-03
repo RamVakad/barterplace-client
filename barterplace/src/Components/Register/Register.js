@@ -66,7 +66,7 @@ class Register extends React.Component {
   };
 
   render() {
-    if (this.state.isAuthenticated === true) return <Redirect to="/Home" />;
+    if (this.state.isAuthenticated === true) return <Redirect to="/" />;
 
     return (
       <div className="Register">

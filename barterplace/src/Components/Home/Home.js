@@ -8,6 +8,7 @@ class Home extends Component {
     super();
     this.state = {};
   }
+
   componentDidMount() {
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {

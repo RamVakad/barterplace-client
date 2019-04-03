@@ -12,16 +12,16 @@ class App extends Component {
     super();
     this.state = {
       input: "",
-      route: "signin",
-      isSignedIn: false,
+      isAuthed: false,
       auth: ""
     };
   }
+
   componentDidMount() {
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
       this.setState({
-        isSignedIn: true,
+        isAuthed: true,
         auth: auth
       });
       return;
@@ -38,17 +38,30 @@ class App extends Component {
     return (
       <div className="App">
         <Route
+          exact
           path="/"
           render={props => <Home {...props} auth={this.state.auth} />}
         />
         <Route
           path="/Login"
-          render={props => <Login {...props} loadUser={this.loadUser} />}
+          render={props => (
+            <Login
+              {...props}
+              loadUser={this.loadUser}
+              isAuthed={this.state.isAuthed}
+            />
+          )}
         />
 
         <Route
           path="/Register"
-          render={props => <Register {...props} loadUser={this.loadUser} />}
+          render={props => (
+            <Register
+              {...props}
+              loadUser={this.loadUser}
+              isAuthed={this.state.isAuthed}
+            />
+          )}
         />
       </div>
     );

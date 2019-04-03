@@ -21,6 +21,10 @@ class Login extends Component {
       this.setState({
         isAuthenticated: true
       });
+    } else {
+      this.setState({
+        isAuthenticated: false
+      });
     }
   }
   onEmailChange = event => {
@@ -57,7 +61,7 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.isAuthenticated === true) return <Redirect to="/Home" />;
+    if (this.state.isAuthenticated === true) return <Redirect to="/" />;
 
     return (
       <div className="Login">
