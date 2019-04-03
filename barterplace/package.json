@@ -18,6 +18,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "proxy": "https://hunterbarter.herokuapp.com",
   "browserslist": [
     ">0.2%",
     "not dead",
