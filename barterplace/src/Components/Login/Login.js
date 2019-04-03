@@ -21,7 +21,6 @@ class Login extends Component {
       this.setState({
         isAuthenticated: true
       });
-      return;
     }
   }
   onEmailChange = event => {

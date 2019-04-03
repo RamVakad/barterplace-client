@@ -8,6 +8,20 @@ class Home extends Component {
     super();
     this.state = {};
   }
+  componentDidMount() {
+    const auth = sessionStorage.getItem("barterAuth");
+    if (auth) {
+      this.setState({
+        isAuthenticated: true
+      });
+    }
+    console.log(auth);
+    fetch(`https://hunterbarter.herokuapp.com/user`, {
+      credentials: "same-origin",
+      method: "get",
+      headers: { "Content-Type": "application/json", Authorization: auth }
+    });
+  }
 
   signOut = () => {
     this.setState({
