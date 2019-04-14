@@ -10,30 +10,22 @@ class AddItem extends Component {
     super();
     this.state = { name: "", description: "", selectedFile: null };
   }
-
+  //I think its working but cant test it
   submitItem = () => {
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
-      let fd = new FormData();
-      fd.append("pic", this.state.selectedFile, "pic");
-      // let payload = {
-      //   name: this.state.name,
-      //   description: this.state.description,
-      //   picture: this.state.selectedFile
-      // };
-      console.log(fd);
-      fetch(
-        `https://hunterbarter.herokuapp.com/user/profilePicture`,
-        {
-          credentials: "same-origin",
-          method: "POST",
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: auth
-          }
+      var form = new FormData();
+      form.append("picture", this.state.selectedFile);
+      form.append("item", this.state.name);
+      form.append("description", this.state.description);
+
+      fetch(`https://hunterbarter.herokuapp.com/list/add`, {
+        method: "post",
+        headers: {
+          Authorization: auth
         },
-        fd
-      )
+        body: form
+      })
         .then(response => response.json())
         .then(res => console.log(res));
     }
