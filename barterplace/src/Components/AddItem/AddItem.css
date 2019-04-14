@@ -1,0 +1,8 @@
+.AddItem {
+  position: absolute;
+  width: 40vw;
+  background-color: white;
+  padding: 30px;
+  top: 10vh;
+  left: 30vw;
+}

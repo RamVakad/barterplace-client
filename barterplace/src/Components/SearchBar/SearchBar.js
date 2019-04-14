@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import "./SeachBar.css";
-
 class SeachBar extends Component {
   constructor(props) {
     super();
