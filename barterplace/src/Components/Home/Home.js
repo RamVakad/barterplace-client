@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import AddItem from "../AddItem/AddItem";
 import ItemList from "../ItemList/ItemList";
-//import { Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
 import logo from "./hunter-college-logo.png";
 import "./Home.css";
@@ -57,12 +57,14 @@ class Home extends Component {
             <AddItem />
           </DialogContent>
         </Modal>
+        <Button variant="primary" onClick={this.toggleAddItemModal}>
+          Add Item
+        </Button>
+
         <ItemList />
         {/* <div id="body">
           <div id="card-wrapper" class="card  mb-3">
             <div class="card-body">
-              <ItemList id="item" />
-              <Button onClick={this.toggleAddItemModal}>Add Item </Button>
               <div class="card bg-light mb-3">
                 <div class="card-header">Computers and Technology</div>
                 <div class="card-body">
