@@ -17,12 +17,11 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import image from "./macbook.jpg";
-
 const styles = theme => ({
   card: {
-    maxWidth: "60vw",
-    marginLeft: "20vw"
+    maxWidth: "350px",
+    minWidth: "350px",
+    minHeight: "450px"
   },
   media: {
     height: 0,
@@ -46,10 +45,13 @@ const styles = theme => ({
   }
 });
 
-class RecipeReviewCard extends React.Component {
-  state = { expanded: false };
-
+class ItemCard extends React.Component {
+  constructor(props) {
+    super();
+    this.state = { expanded: false };
+  }
   handleExpandClick = () => {
+    console.log(this.props.item);
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
@@ -60,7 +62,7 @@ class RecipeReviewCard extends React.Component {
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Avatar aria-label="Profile" className={classes.avatar}>
               R
             </Avatar>
           }
@@ -69,20 +71,19 @@ class RecipeReviewCard extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={this.props.item.name}
+          subheader={this.props.item.date}
         />
         <CardMedia
           className={classes.media}
-          image={image}
-          title="Paella dish"
+          image={this.props.item.image.src}
+          title={this.props.item.name}
         />
         <CardContent>
-          <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+          <Typography component="h3">
+            Condtion: {this.props.item.condition}
           </Typography>
+          <Typography component="p">{this.props.item.description}</Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton aria-label="Add to favorites">
@@ -139,8 +140,8 @@ class RecipeReviewCard extends React.Component {
   }
 }
 
-RecipeReviewCard.propTypes = {
+ItemCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(ItemCard);

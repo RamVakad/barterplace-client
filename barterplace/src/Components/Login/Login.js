@@ -64,57 +64,59 @@ class Login extends Component {
     if (this.state.isAuthenticated === true) return <Redirect to="/" />;
 
     return (
-      <div className="Login">
-        <div>
-          <Typography variant="h3" color="primary">
-            Hunter Barterplace
-          </Typography>
-        </div>
-        <div>
-          <TextField
-            //id="outlined-with-placeholder"
-            label="Email"
-            defaultValue="@myhunter.cuny.edu"
-            type="text"
-            className="TextField"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onEmailChange}
-          />
-        </div>
-        <div>
-          <TextField
-            id="outlined-password-input"
-            label="Password"
-            className="TextField"
-            type="Password"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onPasswordChange}
-          />
-        </div>
-        <div>
+      <div className="container">
+        <div className="Login">
           <div>
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              onClick={() => this.onSubmitSignIn()}
-              style={{ margin: 10 }}
-            >
-              Log In
-            </Button>
+            <Typography variant="h3" color="primary">
+              Hunter Barterplace
+            </Typography>
           </div>
-          <Link to={"/Register"} style={{ textDecoration: "none" }}>
-            <Button
+          <div>
+            <TextField
+              //id="outlined-with-placeholder"
+              label="Email"
+              defaultValue="@myhunter.cuny.edu"
+              type="text"
+              className="TextField"
+              margin="normal"
               variant="outlined"
-              size="large"
-              color="primary"
-              style={{ margin: 10 }}
-            >
-              Register
-            </Button>
-          </Link>
+              onChange={this.onEmailChange}
+            />
+          </div>
+          <div>
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              className="TextField"
+              type="Password"
+              margin="normal"
+              variant="outlined"
+              onChange={this.onPasswordChange}
+            />
+          </div>
+          <div>
+            <div>
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                onClick={() => this.onSubmitSignIn()}
+                style={{ margin: 10 }}
+              >
+                Log In
+              </Button>
+            </div>
+            <Link to={"/Register"} style={{ textDecoration: "none" }}>
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                style={{ margin: 10 }}
+              >
+                Register
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );

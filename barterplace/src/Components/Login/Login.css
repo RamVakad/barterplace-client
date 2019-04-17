@@ -4,18 +4,27 @@
 }
 
 .Login {
-  margin-top: 10vh;
-  margin-right: 39vw;
-  margin-left: 39vw;
+  /* margin-left: 20vw; */
   border-color: black;
   border-style: solid;
   min-width: 300px;
+  max-width: 40vw;
 }
 .Register {
-  margin-top: 10vh;
-  margin-right: 39vw;
-  margin-left: 39vw;
   border-color: black;
   border-style: solid;
   min-width: 300px;
+  max-width: 40vw;
+}
+
+@media only screen and (max-width: 450px) {
+  /* For mobile phones: */
+  .Login {
+    margin-left: 5vw;
+    width: 90vw;
+  }
+  .Register {
+    margin-left: 5vw;
+    width: 90vw;
+  }
 }

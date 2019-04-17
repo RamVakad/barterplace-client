@@ -69,73 +69,75 @@ class Register extends React.Component {
     if (this.state.isAuthenticated === true) return <Redirect to="/" />;
 
     return (
-      <div className="Register">
-        <div>
-          <Typography variant="h3" color="primary">
-            Hunter Barterplace
-          </Typography>
+      <div className="container">
+        <div className="Register">
           <div>
+            <Typography variant="h3" color="primary">
+              Hunter Barterplace
+            </Typography>
+            <div>
+              <TextField
+                label="Enter Name"
+                placeholder="Name"
+                className="TextField"
+                margin="normal"
+                variant="outlined"
+                onChange={this.onNameChange}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Enter Phone Number"
+                placeholder="(505) 500-5000"
+                className="TextField"
+                margin="normal"
+                variant="outlined"
+                onChange={this.onPhoneChange}
+              />
+            </div>
             <TextField
-              label="Enter Name"
-              placeholder="Name"
-              className="TextField"
+              label="Enter Email"
+              defaultValue="@myhunter.cuny.edu"
               margin="normal"
+              className="TextField"
               variant="outlined"
-              onChange={this.onNameChange}
+              onChange={this.onEmailChange}
             />
           </div>
           <div>
             <TextField
-              label="Enter Phone Number"
-              placeholder="(505) 500-5000"
+              label="Enter Password"
+              placeholder="Password"
               className="TextField"
+              type="password"
               margin="normal"
               variant="outlined"
-              onChange={this.onPhoneChange}
+              onChange={this.onPasswordChange}
             />
           </div>
-          <TextField
-            label="Enter Email"
-            defaultValue="@myhunter.cuny.edu"
-            margin="normal"
-            className="TextField"
-            variant="outlined"
-            onChange={this.onEmailChange}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Enter Password"
-            placeholder="Password"
-            className="TextField"
-            type="password"
-            margin="normal"
-            variant="outlined"
-            onChange={this.onPasswordChange}
-          />
-        </div>
-        <br />
-        <div>
+          <br />
           <div>
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              onClick={this.onSubmitRegister}
-            >
-              Register
-            </Button>
+            <div>
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                onClick={this.onSubmitRegister}
+              >
+                Register
+              </Button>
+            </div>
+            <Link to={"/Login"} style={{ textDecoration: "none" }}>
+              <Button
+                variant="outlined"
+                size="large"
+                color="primary"
+                style={{ margin: 10 }}
+              >
+                Login
+              </Button>
+            </Link>
           </div>
-          <Link to={"/Login"} style={{ textDecoration: "none" }}>
-            <Button
-              variant="outlined"
-              size="large"
-              color="primary"
-              style={{ margin: 10 }}
-            >
-              Login
-            </Button>
-          </Link>
         </div>
       </div>
     );

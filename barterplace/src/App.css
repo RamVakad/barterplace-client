@@ -1,7 +1,13 @@
 .App {
   text-align: center;
 }
-
+.container {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 10vh;
+  display: flex;
+  justify-content: space-around;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;

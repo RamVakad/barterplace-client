@@ -57,7 +57,12 @@ class Home extends Component {
             <AddItem />
           </DialogContent>
         </Modal>
-        <Button variant="primary" onClick={this.toggleAddItemModal}>
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          onClick={this.toggleAddItemModal}
+        >
           Add Item
         </Button>
 

@@ -1,0 +1,22 @@
+.List {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  margin-left: 10vw;
+  width: 80vw;
+  justify-content: space-around;
+}
+.itemCard {
+  margin: 25px;
+}
+
+@media only screen and (max-width: 450px) {
+  /* For mobile phones: */
+  .List {
+    margin-left: 0vw;
+    width: 100vw;
+  }
+  .itemCard {
+    margin-bottom: 20px;
+  }
+}

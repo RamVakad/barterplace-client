@@ -24,14 +24,20 @@ class AddItem extends Component {
       .then(response => response.json())
       .then(response => {
         console.log(response);
+
         let newResponse = response.map(item => {
           let image = new Image();
           image.src = "data:image/jpeg;base64," + item.picture.$binary;
+          let date = new Date(item.dateAdded.$date);
+          date = date.toLocaleDateString();
           return {
             name: item.item,
             description: item.description,
             username: item.username,
-            image: image
+            date: date,
+            image: image,
+            category: item.category,
+            condition: item.condition
           };
         });
         console.log(newResponse);
@@ -47,17 +53,13 @@ class AddItem extends Component {
     if (!sessionStorage.getItem("barterAuth")) return <Redirect to="/Login" />;
     return (
       <div className="ItemList">
-        <h1>ItemList</h1>
-        <div style={{ position: "relative", width: "1000px" }} />
-        {this.state.items.map((item, index) => (
-          <div key={index}>
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-            <img src={`${item.image.src}`} alt={"something"} />
-            <p>{item.username}</p>
-            <ItemCard />
-          </div>
-        ))}
+        <div className="List">
+          {this.state.items.map((item, index) => (
+            <div key={index} className="itemCard">
+              <ItemCard item={item} />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
