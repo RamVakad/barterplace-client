@@ -16,16 +16,19 @@ class AddItem extends Component {
     if (auth) {
       var form = new FormData();
       form.append("picture", this.state.selectedFile);
-      form.append("item", this.state.name);
-      form.append("description", this.state.description);
 
-      fetch(`https://hunterbarter.herokuapp.com/list/add`, {
-        method: "post",
-        headers: {
-          Authorization: auth
-        },
-        body: form
-      })
+      fetch(
+        `https://hunterbarter.herokuapp.com/list/add?item=${
+          this.state.name
+        }&description=${this.state.description}`,
+        {
+          method: "post",
+          headers: {
+            Authorization: auth
+          },
+          body: form
+        }
+      )
         .then(response => response.json())
         .then(res => console.log(res));
     }
