@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import AddItem from "../AddItem/AddItem";
 import ItemList from "../ItemList/ItemList";
+import SearchBar from "../SearchBar/SearchBar";
 import { Button } from "@material-ui/core";
 
 import logo from "./hunter-college-logo.png";
@@ -65,7 +66,8 @@ class Home extends Component {
         >
           Add Item
         </Button>
-
+		
+		<SearchBar />
         <ItemList />
         {/* <div id="body">
           <div id="card-wrapper" class="card  mb-3">
