@@ -1,17 +1,20 @@
 import React from "react";
+import { Button } from "@material-ui/core";
 
 const Navigation = ({ signOut }) => {
   return (
-    <nav style={{ display: "flex", justifyContent: "flex-end" }}>
-      <button
-        style={{ fontSize: "24px", margin: "1vw" }}
-        onClick={() => {
-          signOut();
-          sessionStorage.clear();
-        }}
-      >
+    <nav style={{ display: "flex", justifyContent: "flex-left" }}>	  
+		<Button
+			variant="contained"
+            size="large"
+            color="primary"
+            onClick={() => {
+				signOut();
+				sessionStorage.clear();
+            }}
+        >
         Sign Out
-      </button>
+        </Button>
     </nav>
   );
 };
