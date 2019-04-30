@@ -9,14 +9,24 @@ class AddItem extends Component {
     super();
     this.state = { items: [] };
   }
-  componentDidMount() {
+
+  componentWillReceiveProps(nextProps) {
+    let render = "list";
+    if (nextProps.renderList === "AllItems") {
+      render = "list";
+    } else if (nextProps.renderList === "MyList") {
+      render = "list/user";
+    } else if (nextProps.renderList === "WishList") {
+      //Backend isnt working for this at the moment
+      //render = "/favorite";
+    }
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
       this.setState({
         isAuthenticated: true
       });
     }
-    fetch(`https://hunterbarter.herokuapp.com/list`, {
+    fetch(`https://hunterbarter.herokuapp.com/${render}`, {
       credentials: "same-origin",
       method: "get",
       headers: { "Content-Type": "application/json", Authorization: auth }
@@ -40,15 +50,11 @@ class AddItem extends Component {
             condition: item.condition
           };
         });
-        console.log(newResponse);
         this.setState({ items: newResponse });
-        // newResponse[0].image = new Image();
-        // console.log(newResponse);
-        // newResponse[0].image.src =
-        //   "data:image/jpeg;base64," + response[0].picture.$binary;
-        //
       });
+    this.setState({ state: this.state });
   }
+
   render() {
     if (!sessionStorage.getItem("barterAuth")) return <Redirect to="/Login" />;
     return (

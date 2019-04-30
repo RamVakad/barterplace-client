@@ -16,7 +16,12 @@ import "./Home.css";
 class Home extends Component {
   constructor(props) {
     super();
-    this.state = { addItemModal: false };
+    this.state = {
+      addItemModal: false,
+      //by default render all items. dont know if you wanna make it have a
+      //different behavior
+      renderList: "AllItems"
+    };
   }
 
   componentDidMount() {
@@ -44,6 +49,21 @@ class Home extends Component {
       addItemModal: !this.state.addItemModal
     });
   };
+  renderWishList = () => {
+    this.setState({
+      renderList: "WishList"
+    });
+  };
+  renderMyList = () => {
+    this.setState({
+      renderList: "MyList"
+    });
+  };
+  renderAllItems = () => {
+    this.setState({
+      renderList: "AllItems"
+    });
+  };
 
   render() {
     if (!sessionStorage.getItem("barterAuth")) return <Redirect to="/Login" />;
@@ -58,66 +78,46 @@ class Home extends Component {
             <AddItem />
           </DialogContent>
         </Modal>
-		<div align="right">
+        <div className="buttonGroup">
           <Button
             variant="contained"
             size="large"
             color="primary"
             onClick={this.toggleAddItemModal}
           >
-          Add Item
+            Add Item
           </Button>
-		</div>
-		
-		<SearchBar />
-        <ItemList />
-        {/* <div id="body">
-          <div id="card-wrapper" class="card  mb-3">
-            <div class="card-body">
-              <div class="card bg-light mb-3">
-                <div class="card-header">Computers and Technology</div>
-                <div class="card-body">
-                  <img src={require("./macbook.jpg")} />
-                  <h4 class="card-title">
-                    Macbook Pro 13-inch retina display Quad Core
-                  </h4>
-                  <p class="card-text">
-                    Good for Editing videos, Photoshop, Adobe, and Coding with
-                    Visual Studios. 256 GB Storage with 16GB RAM Customized
-                    laptop
-                  </p>
-                  <p>Condition: NEW</p>
-                  <a>Contact Seller</a>
-                </div>
-              </div>
+          <div className="divider" />
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={this.renderAllItems}
+          >
+            All Items
+          </Button>
+          <div className="divider" />
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={this.renderMyList}
+          >
+            My Items
+          </Button>
+          <div className="divider" />
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={this.renderWishList}
+          >
+            Wishlist
+          </Button>
+        </div>
+        <SearchBar />
 
-              <div class="card bg-light mb-3">
-                <div class="card-header">Things that are Fire</div>
-                <div class="card-body">
-                  <img src={require("./mixtape.jpeg")} />
-                  <h4 class="card-title">Rene's Super Fire Mixtape</h4>
-                  <p class="card-text">Proceed with Caution.</p>
-                  <p>Condition: GOOD</p>
-                  <a>Contact Seller</a>
-                </div>
-              </div>
-
-              <div class="card bg-light mb-3">
-                <div class="card-header">Eduction and Books</div>
-                <div class="card-body">
-                  <img src={require("./textbook.jpg")} />
-                  <h4 class="card-title">Economics Textbook</h4>
-                  <p class="card-text">
-                    Aggregate Demand and Aggregate Supply Graphs and the History
-                    of Economics.
-                  </p>
-                  <p>Condition: GOOD</p>
-                  <a>Contact Seller</a>
-                </div>
-              </div> 
-            </div>
-          </div>
-        </div>*/}
+        <ItemList renderList={this.state.renderList} />
       </div>
     );
   }

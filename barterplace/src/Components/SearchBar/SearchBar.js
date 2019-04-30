@@ -2,20 +2,21 @@ import React, { Component } from "react";
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
-class SeachBar extends Component {
-	constructor(props){
-		super();
-		this.state = {
-			item:""
-		};
-	}
-	
+import "./SearchBar.css";
 
-	onNameChange = event => {
-		this.setState({ item: event.target.value });
-	};
-	
-/*	onSubmitSearch = () => {
+class SeachBar extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      item: ""
+    };
+  }
+
+  onNameChange = event => {
+    this.setState({ item: event.target.value });
+  };
+
+  /*	onSubmitSearch = () => {
     // console.log(this.state.event)
     // console.log(this.state.password)
     // console.log(this.state.isAuthenticated);
@@ -38,36 +39,34 @@ class SeachBar extends Component {
       });
 	};
 */
-	
-	render() {
-		return (
-			<div className="SeachBar">	
-				<div align="right">
-					<TextField
-						inputStyle={{ textAlign: 'right', cursor: 'none' }}
-						label="Item"
-						placeholder="eg: xbox"
-						type="text"
-						className="TextField"
-						margin="normal"
-						variant="outlined"
-						onChange={this.onNameChange}
-					/>
-				</div>
-				
-				<div align="right">
-					<Button
-						variant="contained"
-						size="large"
-						color="primary"
-						//onClick={this.onSumbitSearch}
-					>
-					Search Item
-					</Button>
-				</div>
-			</div>
-		);
-	}
+
+  render() {
+    return (
+      <div className="SearchBarContainer">
+        <TextField
+          //inputStyle={{ textAlign: "right", cursor: "none" }}
+          //fullWidth
+          label="Item"
+          placeholder="eg: xbox"
+          type="text"
+          className="SearchBar"
+          margin="normal"
+          variant="outlined"
+          onChange={this.onNameChange}
+        />
+        <Button
+          variant="contained"
+          //size="large"
+          margin="normal"
+          color="primary"
+          className="searchButton"
+          //onClick={this.onSumbitSearch}
+        >
+          Search
+        </Button>
+      </div>
+    );
+  }
 }
 
 export default SeachBar;
