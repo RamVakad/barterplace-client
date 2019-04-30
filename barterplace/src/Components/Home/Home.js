@@ -31,14 +31,19 @@ class Home extends Component {
         isAuthenticated: true
       });
     }
-    // console.log(auth);
-    // fetch(`https://hunterbarter.herokuapp.com/user`, {
-    //   credentials: "same-origin",
-    //   method: "get",
-    //   headers: { "Content-Type": "application/json", Authorization: auth }
-    // });
+    fetch(`https://hunterbarter.herokuapp.com/user`, {
+      credentials: "same-origin",
+      method: "get",
+      headers: { "Content-Type": "application/json", Authorization: auth }
+    })
+      .then(response => response.json())
+      .then(user => sessionStorage.setItem("user", user.username));
   }
-
+  rerender = () => {
+    this.setState({
+      renderList: this.state.renderList
+    });
+  };
   signOut = () => {
     this.setState({
       state: this.state
@@ -75,7 +80,7 @@ class Home extends Component {
 
         <Modal open={this.state.addItemModal} onClose={this.toggleAddItemModal}>
           <DialogContent>
-            <AddItem />
+            <AddItem close={this.toggleAddItemModal} />
           </DialogContent>
         </Modal>
         <div className="buttonGroup">
@@ -117,7 +122,7 @@ class Home extends Component {
         </div>
         <SearchBar />
 
-        <ItemList renderList={this.state.renderList} />
+        <ItemList renderList={this.state.renderList} rerender={this.rerender} />
       </div>
     );
   }

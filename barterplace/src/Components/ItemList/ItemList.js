@@ -47,7 +47,8 @@ class AddItem extends Component {
             date: date,
             image: image,
             category: item.category,
-            condition: item.condition
+            condition: item.condition,
+            id: item._id.$oid
           };
         });
         this.setState({ items: newResponse });
@@ -62,7 +63,7 @@ class AddItem extends Component {
         <div className="List">
           {this.state.items.map((item, index) => (
             <div key={index} className="itemCard">
-              <ItemCard item={item} />
+              <ItemCard item={item} rerender={this.props.rerender} />
             </div>
           ))}
         </div>
