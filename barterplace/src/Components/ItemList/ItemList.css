@@ -9,7 +9,14 @@
 .itemCard {
   margin: 25px;
 }
-
+.contactModal {
+  position: absolute;
+  width: 40vw;
+  background-color: white;
+  padding: 30px;
+  top: 10vh;
+  left: 30vw;
+}
 @media only screen and (max-width: 450px) {
   /* For mobile phones: */
   .List {

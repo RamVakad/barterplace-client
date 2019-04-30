@@ -47,13 +47,23 @@ const styles = theme => ({
   },
   avatar: {
     backgroundColor: red[500]
+  },
+  favoriteIcon: {
+    color: red[500]
   }
 });
 
 class ItemCard extends React.Component {
   constructor(props) {
     super();
-    this.state = { expanded: false, anchorEl: null, editItemModel: false };
+    this.state = {
+      expanded: false,
+      anchorEl: null,
+      editItemModel: false,
+      contactModal: false,
+      userEmail: "",
+      userPhone: ""
+    };
   }
   handleExpandClick = () => {
     console.log(this.props.item);
@@ -82,6 +92,26 @@ class ItemCard extends React.Component {
     this.setState({
       editItemModel: !this.state.editItemModel
     });
+  };
+  toggleContactModel = res => {
+    this.setState({
+      contactModal: !this.state.contactModal,
+      userEmail: res.username,
+      userPhone: res.phone
+    });
+  };
+  contactUser = () => {
+    const auth = sessionStorage.getItem("barterAuth");
+    fetch(
+      `https://hunterbarter.herokuapp.com/user/${this.props.item.username}`,
+      {
+        credentials: "same-origin",
+        method: "get",
+        headers: { "Content-Type": "application/json", Authorization: auth }
+      }
+    )
+      .then(response => response.json())
+      .then(res => this.toggleContactModel(res));
   };
   render() {
     const { classes } = this.props;
@@ -125,7 +155,9 @@ class ItemCard extends React.Component {
                       </MenuItem>
                     </div>
                   ) : (
-                    <MenuItem key={"contact"}>Contact</MenuItem>
+                    <MenuItem key={"contact"} onClick={this.contactUser}>
+                      Contact
+                    </MenuItem>
                   )}
                   ))}
                 </Menu>
@@ -148,7 +180,7 @@ class ItemCard extends React.Component {
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
+              <FavoriteIcon className={classes.favoriteIcon} />
             </IconButton>
             <IconButton aria-label="Share">
               <ShareIcon />
@@ -167,34 +199,29 @@ class ItemCard extends React.Component {
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
               <Typography paragraph>Method:</Typography>
+              <Typography paragraph>What should we put here?</Typography>
               <Typography paragraph>
-                Heat 1/2 cup of the broth in a pot until simmering, add saffron
-                and set aside for 10 minutes.
-              </Typography>
-              <Typography paragraph>
-                Heat oil in a (14- to 16-inch) paella pan or a large, deep
-                skillet over medium-high heat. Add chicken, shrimp and chorizo,
-                and cook, stirring occasionally until lightly browned, 6 to 8
-                minutes. Transfer shrimp to a large plate and set aside, leaving
-                chicken and chorizo in the pan. Add pimentón, bay leaves,
-                garlic, tomatoes, onion, salt and pepper, and cook, stirring
-                often until thickened and fragrant, about 10 minutes. Add
-                saffron broth and remaining 4 1/2 cups chicken broth; bring to a
-                boil.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
               </Typography>
               <Typography paragraph>
-                Add rice and stir very gently to distribute. Top with artichokes
-                and peppers, and cook without stirring, until most of the liquid
-                is absorbed, 15 to 18 minutes. Reduce heat to medium-low, add
-                reserved shrimp and mussels, tucking them down into the rice,
-                and cook again without stirring, until mussels have opened and
-                rice is just tender, 5 to 7 minutes more. (Discard any mussels
-                that don’t open.)
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+                quae ab illo inventore veritatis et quasi architecto beatae
+                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
+                voluptas sit aspernatur aut odit aut fugit, sed quia
+                consequuntur magni dolores eos qui ratione voluptatem sequi
+                nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
+                sit amet, consectetur, adipisci velit, sed quia non numquam eius
+                modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                voluptatem
               </Typography>
-              <Typography>
-                Set aside off of the heat to let rest for 10 minutes, and then
-                serve.
-              </Typography>
+              <Typography>fin</Typography>
             </CardContent>
           </Collapse>
         </Card>
@@ -207,6 +234,14 @@ class ItemCard extends React.Component {
               close={this.toggleEditItemModel}
               itemID={this.props.item.id}
             />
+          </DialogContent>
+        </Modal>
+        <Modal open={this.state.contactModal} onClose={this.toggleContactModel}>
+          <DialogContent>
+            <div className="contactModal">
+              <h1>{this.state.userEmail}</h1>
+              <h1>{this.state.userPhone}</h1>
+            </div>
           </DialogContent>
         </Modal>
       </div>

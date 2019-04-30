@@ -26,18 +26,20 @@ class Home extends Component {
 
   componentDidMount() {
     const auth = sessionStorage.getItem("barterAuth");
-    if (auth) {
+    //console.log(auth);
+    if (auth !== null) {
       this.setState({
         isAuthenticated: true
       });
+
+      fetch(`https://hunterbarter.herokuapp.com/user`, {
+        credentials: "same-origin",
+        method: "get",
+        headers: { "Content-Type": "application/json", Authorization: auth }
+      })
+        .then(response => response.json())
+        .then(user => sessionStorage.setItem("user", user.username));
     }
-    fetch(`https://hunterbarter.herokuapp.com/user`, {
-      credentials: "same-origin",
-      method: "get",
-      headers: { "Content-Type": "application/json", Authorization: auth }
-    })
-      .then(response => response.json())
-      .then(user => sessionStorage.setItem("user", user.username));
   }
   rerender = () => {
     this.setState({
