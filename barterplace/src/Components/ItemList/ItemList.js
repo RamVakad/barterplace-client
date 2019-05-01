@@ -18,7 +18,7 @@ class AddItem extends Component {
       render = "list/user";
     } else if (nextProps.renderList === "WishList") {
       //Backend isnt working for this at the moment
-      //render = "/favorite";
+      render = "/favorite";
     }
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
