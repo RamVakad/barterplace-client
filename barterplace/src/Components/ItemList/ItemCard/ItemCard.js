@@ -120,19 +120,18 @@ class ItemCard extends React.Component {
   addToWishlist = () => {
     const auth = sessionStorage.getItem("barterAuth");
     fetch(
-        `https://hunterbarter.herokuapp.com/favorite/set/${this.props.item.id}`,
-        {
-          credentials: "same-origin",
-          method: "post",
-          headers: { "Content-Type": "application/json", Authorization: auth }
-        }
-    )
-        .then(response => response.json())
+      `https://hunterbarter.herokuapp.com/favorite/set/${this.props.item.id}`,
+      {
+        credentials: "same-origin",
+        method: "post",
+        headers: { "Content-Type": "application/json", Authorization: auth }
+      }
+    ).then(response => response.json());
     //.then(res => this.props.close());
   };
   render() {
     const { classes } = this.props;
-    console.log(this.props.item);
+    //console.log(this.props.item);
     const open = Boolean(this.state.anchorEl);
 
     return (
@@ -172,14 +171,11 @@ class ItemCard extends React.Component {
                       </MenuItem>
                     </div>
                   ) : (
-                      <div>
-                        <MenuItem key={"contact"} onClick={this.contactUser}>
-                          Contact
-                        </MenuItem>
-                        <MenuItem key={"favorite"} onClick={this.addToWishlist}>
-                          Add to Wishlist
-                        </MenuItem>
-                      </div>
+                    <div>
+                      <MenuItem key={"contact"} onClick={this.contactUser}>
+                        Contact
+                      </MenuItem>
+                    </div>
                   )}
                   ))}
                 </Menu>
@@ -201,7 +197,10 @@ class ItemCard extends React.Component {
             <Typography component="p">{this.props.item.description}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
+            <IconButton
+              aria-label="Add to favorites"
+              onClick={this.addToWishlist}
+            >
               <FavoriteIcon className={classes.favoriteIcon} />
             </IconButton>
             <IconButton aria-label="Share">

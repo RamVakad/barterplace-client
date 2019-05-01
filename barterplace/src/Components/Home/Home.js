@@ -21,7 +21,7 @@ class Home extends Component {
       showProfile: false,
       //by default render all items. dont know if you wanna make it have a
       //different behavior
-      renderList: "AllItems"
+      renderList: "Items"
     };
   }
 
@@ -69,12 +69,12 @@ class Home extends Component {
   };
   renderMyList = () => {
     this.setState({
-      renderList: "MyList"
+      renderList: "List"
     });
   };
   renderAllItems = () => {
     this.setState({
-      renderList: "AllItems"
+      renderList: "Items"
     });
   };
 

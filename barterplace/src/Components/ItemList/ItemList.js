@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import ItemCard from "./ItemCard/ItemCard";
 import "./ItemList.css";
-
+var newResponse;
 class AddItem extends Component {
   constructor(props) {
     super();
@@ -12,13 +12,16 @@ class AddItem extends Component {
 
   componentWillReceiveProps(nextProps) {
     let render = "list";
-    if (nextProps.renderList === "AllItems") {
+    let renderWishList = false;
+    if (nextProps.renderList === "Items") {
+      renderWishList = false;
       render = "list";
-    } else if (nextProps.renderList === "MyList") {
+    } else if (nextProps.renderList === "List") {
+      renderWishList = false;
       render = "list/user";
     } else if (nextProps.renderList === "WishList") {
-      //Backend isnt working for this at the moment
-      render = "/favorite";
+      renderWishList = true;
+      render = "list";
     }
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
@@ -33,9 +36,9 @@ class AddItem extends Component {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response);
+        //console.log(response);
 
-        let newResponse = response.map(item => {
+        newResponse = response.map(item => {
           let image = new Image();
           image.src = "data:image/jpeg;base64," + item.picture.$binary;
           let date = new Date(item.dateAdded.$date);
@@ -51,8 +54,35 @@ class AddItem extends Component {
             id: item._id.$oid
           };
         });
-        this.setState({ items: newResponse });
+      })
+      .then(res => {
+        if (renderWishList) {
+          fetch(`https://hunterbarter.herokuapp.com/favorite`, {
+            credentials: "same-origin",
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: auth
+            }
+          })
+            .then(response => response.json())
+            .then(wishlist => {
+              if (wishlist.length) {
+                let temp = newResponse.filter(value =>
+                  wishlist.includes(value.id)
+                );
+                this.setState({ items: temp });
+              } // else {
+              //   console.log("no wish");
+              //   this.setState({ items: [] });
+              // }
+            });
+        } else {
+          console.log("no wish");
+          this.setState({ items: newResponse });
+        }
       });
+
     this.setState({ state: this.state });
   }
 
@@ -61,11 +91,15 @@ class AddItem extends Component {
     return (
       <div className="ItemList">
         <div className="List">
-          {this.state.items.map((item, index) => (
-            <div key={index} className="itemCard">
-              <ItemCard item={item} rerender={this.props.rerender} />
-            </div>
-          ))}
+          {this.state.items.length > 0 ? (
+            this.state.items.map((item, index) => (
+              <div key={index} className="itemCard">
+                <ItemCard item={item} rerender={this.props.rerender} />
+              </div>
+            ))
+          ) : (
+            <h1>Your {this.props.renderList} could be here...</h1>
+          )}
         </div>
       </div>
     );
