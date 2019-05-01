@@ -18,6 +18,7 @@ class Home extends Component {
     super();
     this.state = {
       addItemModal: false,
+      showProfile: false,
       //by default render all items. dont know if you wanna make it have a
       //different behavior
       renderList: "AllItems"
@@ -49,6 +50,11 @@ class Home extends Component {
   signOut = () => {
     this.setState({
       state: this.state
+    });
+  };
+  toggleProfile = () => {
+    this.setState({
+      showProfile: !this.state.showProfile
     });
   };
   toggleAddItemModal = () => {
@@ -83,6 +89,11 @@ class Home extends Component {
         <Modal open={this.state.addItemModal} onClose={this.toggleAddItemModal}>
           <DialogContent>
             <AddItem close={this.toggleAddItemModal} />
+          </DialogContent>
+        </Modal>
+        <Modal open={this.state.showProfile} onClose={this.toggleProfile}>
+          <DialogContent>
+            <AddItem close={this.toggleProfile} />
           </DialogContent>
         </Modal>
         <div className="buttonGroup">

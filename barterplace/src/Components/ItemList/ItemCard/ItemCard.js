@@ -12,6 +12,7 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
+import blue from "@material-ui/core/colors/blue";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -50,6 +51,9 @@ const styles = theme => ({
   },
   favoriteIcon: {
     color: red[500]
+  },
+  shareIcon: {
+    color: blue[500]
   }
 });
 
@@ -183,7 +187,7 @@ class ItemCard extends React.Component {
               <FavoriteIcon className={classes.favoriteIcon} />
             </IconButton>
             <IconButton aria-label="Share">
-              <ShareIcon />
+              <ShareIcon className={classes.shareIcon} />
             </IconButton>
             <IconButton
               className={classnames(classes.expand, {
