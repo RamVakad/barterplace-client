@@ -130,6 +130,18 @@ class ItemCard extends React.Component {
       .then(response => response.json())
       .then(res => this.setState({ state: this.state }));
   };
+  removeFromWishlist = () => {
+    const auth = sessionStorage.getItem("barterAuth");
+    fetch(
+        `https://hunterbarter.herokuapp.com/favorite/remove/${this.props.item.id}`,
+        {
+          credentials: "same-origin",
+          method: "get",
+          headers: { "Content-Type": "application/json", Authorization: auth }
+        }
+    ).then(res => this.props.rerender());
+  };
+
   render() {
     const { classes } = this.props;
     //console.log(this.props.item);
@@ -200,6 +212,9 @@ class ItemCard extends React.Component {
           <CardActions className={classes.actions} disableActionSpacing>
             <IconButton
               aria-label="Add to favorites"
+              /*
+              check if already in wishlist, call add/remove
+               */
               onClick={this.addToWishlist}
             >
               {this.props.wishlist.includes(this.props.item.id) ? (
