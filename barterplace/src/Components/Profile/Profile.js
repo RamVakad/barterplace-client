@@ -7,33 +7,31 @@ class AddItem extends Component {
   constructor(props) {
     super();
     this.state = {
-      //   name: "",
-      //   description: "",
-      //   selectedFile: null,
+      name: "",
+      phone: "",
+      selectedFile: null
       //   condition: "",
       //   category: ""
     };
+  }
+  componentDidMount() {
+    this.setState({
+      name: this.props.user.name,
+      phone: this.props.user.phone
+    });
   }
   submitProfile = () => {
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
       var form = new FormData();
       form.append("picture", this.state.selectedFile);
-
-      fetch(
-        `https://hunterbarter.herokuapp.com/list/add?item=${
-          this.state.name
-        }&description=${this.state.description}&condition=${
-          this.state.condition
-        }&category=${this.state.category}`,
-        {
-          method: "post",
-          headers: {
-            Authorization: auth
-          },
-          body: form
-        }
-      )
+      fetch(`https://hunterbarter.herokuapp.com/user`, {
+        method: "post",
+        headers: {
+          Authorization: auth
+        },
+        body: { name: this.state.name, phone: this.state.phone }
+      })
         .then(response => response.json())
         .then(res => this.props.close());
     }
@@ -49,6 +47,7 @@ class AddItem extends Component {
   };
 
   render() {
+    console.log(this.props.user);
     if (!sessionStorage.getItem("barterAuth")) return <Redirect to="/Login" />;
     return (
       <div className="AddItem">
@@ -64,10 +63,8 @@ class AddItem extends Component {
         <br />
         <TextField
           label="Phone Number"
-          multiline
-          rows="4"
-          value={this.state.description}
-          onChange={this.handleChange("description")}
+          value={this.state.phone}
+          onChange={this.handleChange("phone")}
           margin="normal"
           variant="outlined"
           fullWidth
@@ -80,7 +77,7 @@ class AddItem extends Component {
             variant="contained"
             size="large"
             color="primary"
-            onClick={this.submitItem}
+            onClick={this.submitProfile}
           >
             Submit
           </Button>

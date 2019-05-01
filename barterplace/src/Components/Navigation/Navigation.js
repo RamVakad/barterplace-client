@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 
-const Navigation = ({ signOut }) => {
+const Navigation = ({ signOut, toggleProfile }) => {
   return (
     <nav
       style={{ display: "flex", justifyContent: "flex-end", margin: "10px" }}
@@ -21,7 +21,9 @@ const Navigation = ({ signOut }) => {
         variant="contained"
         size="large"
         color="secondary"
-        onClick={() => {}}
+        onClick={() => {
+          toggleProfile();
+        }}
         style={{ marginLeft: "10px" }}
       >
         Profile

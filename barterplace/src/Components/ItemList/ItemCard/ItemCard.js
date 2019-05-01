@@ -126,14 +126,15 @@ class ItemCard extends React.Component {
         method: "post",
         headers: { "Content-Type": "application/json", Authorization: auth }
       }
-    ).then(response => response.json());
-    //.then(res => this.props.close());
+    )
+      .then(response => response.json())
+      .then(res => this.setState({ state: this.state }));
   };
   render() {
     const { classes } = this.props;
     //console.log(this.props.item);
     const open = Boolean(this.state.anchorEl);
-
+    console.log(this.props.item.image);
     return (
       <div>
         <Card className={classes.card}>
@@ -186,7 +187,7 @@ class ItemCard extends React.Component {
           />
           <CardMedia
             className={classes.media}
-            image={this.props.item.image.src}
+            image={"http://" + this.props.item.image}
             title={this.props.item.name}
           />
 
@@ -201,7 +202,11 @@ class ItemCard extends React.Component {
               aria-label="Add to favorites"
               onClick={this.addToWishlist}
             >
-              <FavoriteIcon className={classes.favoriteIcon} />
+              {this.props.wishlist.includes(this.props.item.id) ? (
+                <FavoriteIcon className={classes.favoriteIcon} />
+              ) : (
+                <FavoriteIcon className="none" />
+              )}
             </IconButton>
             <IconButton aria-label="Share">
               <ShareIcon className={classes.shareIcon} />

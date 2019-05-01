@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import ItemCard from "./ItemCard/ItemCard";
 import "./ItemList.css";
 var newResponse;
+var favorites;
 class AddItem extends Component {
   constructor(props) {
     super();
@@ -39,8 +40,8 @@ class AddItem extends Component {
         //console.log(response);
 
         newResponse = response.map(item => {
-          let image = new Image();
-          image.src = "data:image/jpeg;base64," + item.picture.$binary;
+          console.log(item);
+
           let date = new Date(item.dateAdded.$date);
           date = date.toLocaleDateString();
           return {
@@ -48,7 +49,7 @@ class AddItem extends Component {
             description: item.description,
             username: item.username,
             date: date,
-            image: image,
+            image: "dkdno63yk5s4u.cloudfront.net/" + item.picture,
             category: item.category,
             condition: item.condition,
             id: item._id.$oid
@@ -56,31 +57,27 @@ class AddItem extends Component {
         });
       })
       .then(res => {
-        if (renderWishList) {
-          fetch(`https://hunterbarter.herokuapp.com/favorite`, {
-            credentials: "same-origin",
-            method: "get",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: auth
+        fetch(`https://hunterbarter.herokuapp.com/favorite`, {
+          credentials: "same-origin",
+          method: "get",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: auth
+          }
+        })
+          .then(response => response.json())
+          .then(wishlist => {
+            favorites = wishlist;
+            if (wishlist.length && renderWishList) {
+              let temp = newResponse.filter(value =>
+                wishlist.includes(value.id)
+              );
+              this.setState({ items: temp });
+            } else {
+              console.log("no wish");
+              this.setState({ items: newResponse });
             }
-          })
-            .then(response => response.json())
-            .then(wishlist => {
-              if (wishlist.length) {
-                let temp = newResponse.filter(value =>
-                  wishlist.includes(value.id)
-                );
-                this.setState({ items: temp });
-              } // else {
-              //   console.log("no wish");
-              //   this.setState({ items: [] });
-              // }
-            });
-        } else {
-          console.log("no wish");
-          this.setState({ items: newResponse });
-        }
+          });
       });
 
     this.setState({ state: this.state });
@@ -94,7 +91,11 @@ class AddItem extends Component {
           {this.state.items.length > 0 ? (
             this.state.items.map((item, index) => (
               <div key={index} className="itemCard">
-                <ItemCard item={item} rerender={this.props.rerender} />
+                <ItemCard
+                  item={item}
+                  rerender={this.props.rerender}
+                  wishlist={favorites}
+                />
               </div>
             ))
           ) : (

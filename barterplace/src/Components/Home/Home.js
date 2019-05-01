@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 
 import Navigation from "../Navigation/Navigation";
 import AddItem from "../AddItem/AddItem";
+import Profile from "../Profile/Profile";
 import ItemList from "../ItemList/ItemList";
 import SearchBar from "../SearchBar/SearchBar";
 import { Button } from "@material-ui/core";
@@ -17,6 +18,7 @@ class Home extends Component {
   constructor(props) {
     super();
     this.state = {
+      user: {},
       addItemModal: false,
       showProfile: false,
       //by default render all items. dont know if you wanna make it have a
@@ -39,7 +41,10 @@ class Home extends Component {
         headers: { "Content-Type": "application/json", Authorization: auth }
       })
         .then(response => response.json())
-        .then(user => sessionStorage.setItem("user", user.username));
+        .then(user => {
+          this.setState({ user: user });
+          sessionStorage.setItem("user", user.username);
+        });
     }
   }
   rerender = () => {
@@ -82,7 +87,7 @@ class Home extends Component {
     if (!sessionStorage.getItem("barterAuth")) return <Redirect to="/Login" />;
     return (
       <div className="Home">
-        <Navigation signOut={this.signOut} />
+        <Navigation signOut={this.signOut} toggleProfile={this.toggleProfile} />
         <img src={logo} width="20%" alt="hunter" />
         <h1 id="banner">Hunter Barter App</h1>
 
@@ -93,7 +98,7 @@ class Home extends Component {
         </Modal>
         <Modal open={this.state.showProfile} onClose={this.toggleProfile}>
           <DialogContent>
-            <AddItem close={this.toggleProfile} />
+            <Profile close={this.toggleProfile} user={this.state.user} />
           </DialogContent>
         </Modal>
         <div className="buttonGroup">
