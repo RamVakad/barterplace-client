@@ -113,6 +113,19 @@ class ItemCard extends React.Component {
       .then(response => response.json())
       .then(res => this.toggleContactModel(res));
   };
+  addToWishlist = () => {
+    const auth = sessionStorage.getItem("barterAuth");
+    fetch(
+        `https://hunterbarter.herokuapp.com/favorite/set/${this.props.item.id}`,
+        {
+          credentials: "same-origin",
+          method: "post",
+          headers: { "Content-Type": "application/json", Authorization: auth }
+        }
+    )
+        .then(response => response.json())
+    //.then(res => this.props.close());
+  };
   render() {
     const { classes } = this.props;
     console.log(this.props.item);
@@ -155,9 +168,14 @@ class ItemCard extends React.Component {
                       </MenuItem>
                     </div>
                   ) : (
-                    <MenuItem key={"contact"} onClick={this.contactUser}>
-                      Contact
-                    </MenuItem>
+                      <div>
+                        <MenuItem key={"contact"} onClick={this.contactUser}>
+                          Contact
+                        </MenuItem>
+                        <MenuItem key={"favorite"} onClick={this.addToWishlist}>
+                          Add to Wishlist
+                        </MenuItem>
+                      </div>
                   )}
                   ))}
                 </Menu>
