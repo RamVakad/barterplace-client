@@ -13,32 +13,26 @@ class SeachBar extends Component {
   }
 
   onNameChange = event => {
-    this.setState({ item: event.target.value });
+      console.log(event.target.value)
+      this.setState({ item: event.target.value });
   };
 
-  /*	onSubmitSearch = () => {
-    // console.log(this.state.event)
-    // console.log(this.state.password)
-    // console.log(this.state.isAuthenticated);
-		fetch(
-			`https://hunterbarter.herokuapp.com/auth/login?username=${
-			this.state.email
-			}&password=${this.state.password}`,
-			{
-				method: "get",
-				headers: { "Content-Type": "application/json" }
-			}
-		)
-		.then(response => response.json())
-		.then(data => {
+  onSubmitSearch = () => {
+      const auth = sessionStorage.getItem("barterAuth");
+      fetch(
+          `https://hunterbarter.herokuapp.com/search=${this.state.value}`,
+          {
+              credentials: "same-origin",
+              method: "get",
+              headers: { "Content-Type": "application/json", Authorization: auth}
+          })
+          .then(response => response.json())
+          .then(data => {
 			if (data.success) {
-				this.props.loadUser(data);
-				this.setState({
-				});
+				console.log(data)
 			}
-      });
-	};
-*/
+          });
+  };
 
   render() {
     return (
@@ -60,7 +54,7 @@ class SeachBar extends Component {
           margin="normal"
           color="primary"
           className="searchButton"
-          //onClick={this.onSumbitSearch}
+          onClick={this.onSumbitSearch}
         >
           Search
         </Button>
