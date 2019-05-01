@@ -66,8 +66,15 @@ class ItemCard extends React.Component {
       editItemModel: false,
       contactModal: false,
       userEmail: "",
-      userPhone: ""
+      userPhone: "",
+      wishlist: []
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      wishlist: this.props.wishlist
+    });
   }
   handleExpandClick = () => {
     console.log(this.props.item);
@@ -129,24 +136,30 @@ class ItemCard extends React.Component {
     )
       .then(response => response.json())
       .then(res => this.setState({ state: this.state }));
+    this.setState({ wishlist: [...this.state.wishlist, this.props.item.id] });
   };
   removeFromWishlist = () => {
     const auth = sessionStorage.getItem("barterAuth");
     fetch(
-        `https://hunterbarter.herokuapp.com/favorite/remove/${this.props.item.id}`,
-        {
-          credentials: "same-origin",
-          method: "get",
-          headers: { "Content-Type": "application/json", Authorization: auth }
-        }
+      `https://hunterbarter.herokuapp.com/favorite/delete/${
+        this.props.item.id
+      }`,
+      {
+        credentials: "same-origin",
+        method: "get",
+        headers: { "Content-Type": "application/json", Authorization: auth }
+      }
     ).then(res => this.props.rerender());
+    let newWishList = this.state.wishlist;
+    newWishList.splice(newWishList.indexOf(this.props.item.id, 1));
+    this.setState({
+      wishlist: newWishList
+    });
   };
 
   render() {
     const { classes } = this.props;
-    //console.log(this.props.item);
     const open = Boolean(this.state.anchorEl);
-    console.log(this.props.item.image);
     return (
       <div>
         <Card className={classes.card}>
@@ -210,19 +223,28 @@ class ItemCard extends React.Component {
             <Typography component="p">{this.props.item.description}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton
-              aria-label="Add to favorites"
-              /*
-              check if already in wishlist, call add/remove
-               */
-              onClick={this.addToWishlist}
-            >
-              {this.props.wishlist.includes(this.props.item.id) ? (
+            {this.state.wishlist.includes(this.props.item.id) ? (
+              <IconButton
+                aria-label="Add to favorites"
+                /*
+               check if already in wishlist, call add/remove
+                */
+                onClick={this.removeFromWishlist}
+              >
                 <FavoriteIcon className={classes.favoriteIcon} />
-              ) : (
-                <FavoriteIcon className="none" />
-              )}
-            </IconButton>
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label="Add to favorites"
+                /*
+                 check if already in wishlist, call add/remove
+                  */
+                onClick={this.addToWishlist}
+              >
+                <FavoriteIcon className={"none"} />
+              </IconButton>
+            )}
+
             <IconButton aria-label="Share">
               <ShareIcon className={classes.shareIcon} />
             </IconButton>
@@ -250,19 +272,6 @@ class ItemCard extends React.Component {
                 nulla pariatur. Excepteur sint occaecat cupidatat non proident,
                 sunt in culpa qui officia deserunt mollit anim id est laborum.
               </Typography>
-              <Typography paragraph>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis et quasi architecto beatae
-                vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                voluptas sit aspernatur aut odit aut fugit, sed quia
-                consequuntur magni dolores eos qui ratione voluptatem sequi
-                nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor
-                sit amet, consectetur, adipisci velit, sed quia non numquam eius
-                modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-                voluptatem
-              </Typography>
-              <Typography>fin</Typography>
             </CardContent>
           </Collapse>
         </Card>

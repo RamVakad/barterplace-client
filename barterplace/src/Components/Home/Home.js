@@ -13,7 +13,6 @@ import { Button } from "@material-ui/core";
 import logo from "./hunter-college-logo.png";
 import "./Home.css";
 //import Navbar from "../Navbar/Navbar";
-
 class Home extends Component {
   constructor(props) {
     super();
@@ -23,7 +22,8 @@ class Home extends Component {
       showProfile: false,
       //by default render all items. dont know if you wanna make it have a
       //different behavior
-      renderList: "Items"
+      renderList: "Items",
+      page: 1
     };
   }
 
@@ -31,10 +31,6 @@ class Home extends Component {
     const auth = sessionStorage.getItem("barterAuth");
     //console.log(auth);
     if (auth !== null) {
-      this.setState({
-        isAuthenticated: true
-      });
-
       fetch(`https://hunterbarter.herokuapp.com/user`, {
         credentials: "same-origin",
         method: "get",
@@ -82,7 +78,16 @@ class Home extends Component {
       renderList: "Items"
     });
   };
-
+  nextPage = () => {
+    this.setState({
+      page: this.state.page + 1
+    });
+  };
+  prevPage = () => {
+    this.setState({
+      page: this.state.page - 1
+    });
+  };
   render() {
     if (!sessionStorage.getItem("barterAuth")) return <Redirect to="/Login" />;
     return (
@@ -140,7 +145,42 @@ class Home extends Component {
         </div>
         <SearchBar />
 
-        <ItemList renderList={this.state.renderList} rerender={this.rerender} />
+        <ItemList
+          renderList={this.state.renderList}
+          rerender={this.rerender}
+          page={this.state.page}
+        />
+        {this.state.page > 1 ? (
+          <div>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={this.prevPage}
+            >
+              Prev
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={this.nextPage}
+            >
+              next
+            </Button>
+          </div>
+        ) : (
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={this.nextPage}
+          >
+            next
+          </Button>
+        )}
+
+        <br />
       </div>
     );
   }

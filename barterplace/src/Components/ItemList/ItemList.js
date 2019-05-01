@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-
+import { Button } from "@material-ui/core";
 import ItemCard from "./ItemCard/ItemCard";
 import "./ItemList.css";
 var newResponse;
 var favorites;
+var page = 1;
 class AddItem extends Component {
   constructor(props) {
     super();
@@ -30,7 +31,7 @@ class AddItem extends Component {
         isAuthenticated: true
       });
     }
-    fetch(`https://hunterbarter.herokuapp.com/${render}`, {
+    fetch(`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`, {
       credentials: "same-origin",
       method: "get",
       headers: { "Content-Type": "application/json", Authorization: auth }
@@ -40,7 +41,7 @@ class AddItem extends Component {
         //console.log(response);
 
         newResponse = response.map(item => {
-          console.log(item);
+          // console.log(item);
 
           let date = new Date(item.dateAdded.$date);
           date = date.toLocaleDateString();

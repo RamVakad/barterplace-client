@@ -20,18 +20,24 @@ class AddItem extends Component {
       phone: this.props.user.phone
     });
   }
+
   submitProfile = () => {
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
-      var form = new FormData();
-      form.append("picture", this.state.selectedFile);
-      fetch(`https://hunterbarter.herokuapp.com/user`, {
-        method: "post",
-        headers: {
-          Authorization: auth
-        },
-        body: { name: this.state.name, phone: this.state.phone }
-      })
+      //var form = new FormData();
+      //form.append("picture", this.state.selectedFile);
+      fetch(
+        `https://hunterbarter.herokuapp.com/user/update?name=${
+          this.state.name
+        }&phone=${this.state.phone}`,
+        {
+          method: "post",
+          headers: {
+            Authorization: auth
+          }
+          // body: { name: this.state.name, phone: this.state.phone }
+        }
+      )
         .then(response => response.json())
         .then(res => this.props.close());
     }
