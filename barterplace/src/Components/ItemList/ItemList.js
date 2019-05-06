@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import ItemCard from "./ItemCard/ItemCard";
 import "./ItemList.css";
+import FilterItem from "../FilterItem/FilterItem";
 var newResponse;
 var favorites;
 var page = 1;
@@ -24,24 +25,43 @@ class AddItem extends Component {
     } else if (nextProps.renderList === "WishList") {
       renderWishList = true;
       render = "list";
+    } else if (nextProps.renderList === "Filter") {
+      renderWishList = false;
+      render = "filter";
     }
+    
+
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
       this.setState({
         isAuthenticated: true
       });
     }
-    fetch(`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`, {
+
+    
+
+    var url =`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
+    if(nextProps.renderList === "Filter")
+    {
+        url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.page}?condition=${nextProps.condition}&category=${nextProps.category}`;
+    }
+    else{
+      url =`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
+    }
+
+
+
+    fetch(url, {
       credentials: "same-origin",
       method: "get",
       headers: { "Content-Type": "application/json", Authorization: auth }
     })
       .then(response => response.json())
       .then(response => {
-        //console.log(response);
+        console.log(response);
 
         newResponse = response.map(item => {
-          // console.log(item);
+           console.log(item);
 
           let date = new Date(item.dateAdded.$date);
           date = date.toLocaleDateString();

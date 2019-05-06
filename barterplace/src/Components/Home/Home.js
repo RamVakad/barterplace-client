@@ -8,10 +8,30 @@ import AddItem from "../AddItem/AddItem";
 import Profile from "../Profile/Profile";
 import ItemList from "../ItemList/ItemList";
 import SearchBar from "../SearchBar/SearchBar";
+import FilterItem from "../FilterItem/FilterItem";
+
+import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import logo from "./hunter-college-logo.png";
 import "./Home.css";
+
+let categories = [
+  { label: "Clothing", value: "Clothing" },
+  { label: "Technology", value: "Technology" },
+  { label: "Collectable/Art", value: "Collectable/Art" },
+  { label: "Sporting Goods", value: "Sporting Goods" },
+  { label: "Music", value: "Music" },
+  { label: "Other", value: "Other" }
+];
+
+let conditions = [
+  { label: "New", value: "New" },
+  { label: "Like New", value: "Like New" },
+  { label: "Used", value: "Used" }
+];
+
 //import Navbar from "../Navbar/Navbar";
 class Home extends Component {
   constructor(props) {
@@ -23,9 +43,16 @@ class Home extends Component {
       //by default render all items. dont know if you wanna make it have a
       //different behavior
       renderList: "Items",
-      page: 1
+      page: 1,
+      labelWidth: 0,
+      condition: "",
+      category: ""
     };
   }
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.value });
+    this.renderFilter();
+  };
 
   componentDidMount() {
     const auth = sessionStorage.getItem("barterAuth");
@@ -78,6 +105,12 @@ class Home extends Component {
       renderList: "Items"
     });
   };
+  renderFilter = () => {
+    this.setState({
+      renderList: "Filter"
+    });
+  };
+
   nextPage = () => {
     this.setState({
       page: this.state.page + 1
@@ -142,6 +175,41 @@ class Home extends Component {
           >
             Wishlist
           </Button>
+          <br />
+          <TextField
+            select
+            label="Condition"
+            value={this.state.condition}
+            onChange={this.handleChange("condition")}
+            SelectProps={{}}
+            helperText="Filter by condition"
+            margin="normal"
+            variant="outlined"
+          >
+            {conditions.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+          select
+          label="Category"
+          value={this.state.category}
+          onChange={this.handleChange("category")}
+          SelectProps={{}}
+          helperText="Filter by category"
+          margin="normal"
+          variant="outlined"
+        >
+          {categories.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+          <br />
+          {/* <FilterItem onChange ="alert(30);" /> */}
         </div>
         <SearchBar />
 
@@ -149,6 +217,8 @@ class Home extends Component {
           renderList={this.state.renderList}
           rerender={this.rerender}
           page={this.state.page}
+          condition={this.state.condition}
+          category={this.state.category}
         />
         {this.state.page > 1 ? (
           <div>
