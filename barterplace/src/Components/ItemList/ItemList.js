@@ -29,7 +29,6 @@ class AddItem extends Component {
       renderWishList = false;
       render = "filter";
     }
-    
 
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
@@ -38,18 +37,14 @@ class AddItem extends Component {
       });
     }
 
-    
-
-    var url =`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
-    if(nextProps.renderList === "Filter")
-    {
-        url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.page}?condition=${nextProps.condition}&category=${nextProps.category}`;
+    var url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
+    if (nextProps.renderList === "Filter") {
+      url = `https://hunterbarter.herokuapp.com/${render}/${
+        nextProps.page
+      }?condition=${nextProps.condition}&category=${nextProps.category}`;
+    } else {
+      url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
     }
-    else{
-      url =`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
-    }
-
-
 
     fetch(url, {
       credentials: "same-origin",
@@ -61,7 +56,7 @@ class AddItem extends Component {
         console.log(response);
 
         newResponse = response.map(item => {
-           console.log(item);
+          console.log(item);
 
           let date = new Date(item.dateAdded.$date);
           date = date.toLocaleDateString();

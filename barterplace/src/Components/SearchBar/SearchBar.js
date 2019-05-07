@@ -13,25 +13,23 @@ class SeachBar extends Component {
   }
 
   onNameChange = event => {
-      console.log(event.target.value)
-      this.setState({ item: event.target.value });
+    console.log(event.target.value);
+    this.setState({ item: event.target.value });
   };
 
   onSubmitSearch = () => {
-      const auth = sessionStorage.getItem("barterAuth");
-      fetch(
-          `https://hunterbarter.herokuapp.com/search=${this.state.value}`,
-          {
-              credentials: "same-origin",
-              method: "get",
-              headers: { "Content-Type": "application/json", Authorization: auth}
-          })
-          .then(response => response.json())
-          .then(data => {
-			if (data.success) {
-				console.log(data)
-			}
-          });
+    const auth = sessionStorage.getItem("barterAuth");
+    fetch(`https://hunterbarter.herokuapp.com/search=${this.state.item}`, {
+      credentials: "same-origin",
+      method: "get",
+      headers: { "Content-Type": "application/json", Authorization: auth }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log(data);
+        }
+      });
   };
 
   render() {
