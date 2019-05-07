@@ -18,6 +18,7 @@ import logo from "./hunter-college-logo.png";
 import "./Home.css";
 
 let categories = [
+  { label: "", value: "" },
   { label: "Clothing", value: "Clothing" },
   { label: "Technology", value: "Technology" },
   { label: "Collectable/Art", value: "Collectable/Art" },
@@ -27,6 +28,7 @@ let categories = [
 ];
 
 let conditions = [
+  { label: "", value: "" },
   { label: "New", value: "New" },
   { label: "Like New", value: "Like New" },
   { label: "Used", value: "Used" }
@@ -43,6 +45,7 @@ class Home extends Component {
       //by default render all items. dont know if you wanna make it have a
       //different behavior
       renderList: "Items",
+      currpage: "Items",
       page: 1,
       labelWidth: 0,
       condition: "",
@@ -50,7 +53,9 @@ class Home extends Component {
     };
   }
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+    this.setState({ [name]: event.target.value,
+      page: 1
+     });
     this.renderFilter();
   };
 
@@ -92,17 +97,20 @@ class Home extends Component {
   };
   renderWishList = () => {
     this.setState({
-      renderList: "WishList"
+      renderList: "WishList",
+      currpage: "WishList"
     });
   };
   renderMyList = () => {
     this.setState({
-      renderList: "List"
+      renderList: "List",
+      currpage: "List"
     });
   };
   renderAllItems = () => {
     this.setState({
-      renderList: "Items"
+      renderList: "Items",
+      currpage: "Items"
     });
   };
   renderFilter = () => {
@@ -219,6 +227,7 @@ class Home extends Component {
           page={this.state.page}
           condition={this.state.condition}
           category={this.state.category}
+          currpage={this.state.currpage}
         />
         {this.state.page > 1 ? (
           <div>

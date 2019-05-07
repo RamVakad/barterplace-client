@@ -43,7 +43,7 @@ class AddItem extends Component {
     var url =`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
     if(nextProps.renderList === "Filter")
     {
-        url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.page}?condition=${nextProps.condition}&category=${nextProps.category}`;
+        url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.currpage}/${nextProps.page}?condition=${nextProps.condition}&category=${nextProps.category}`;
     }
     else{
       url =`https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
