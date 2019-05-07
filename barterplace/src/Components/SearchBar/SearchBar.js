@@ -19,7 +19,7 @@ class SeachBar extends Component {
 
   onSubmitSearch = () => {
     const auth = sessionStorage.getItem("barterAuth");
-    fetch(`https://hunterbarter.herokuapp.com/search=${this.state.item}`, {
+    fetch(`https://hunterbarter.herokuapp.com/?search=${this.state.item}`, {
       credentials: "same-origin",
       method: "get",
       headers: { "Content-Type": "application/json", Authorization: auth }

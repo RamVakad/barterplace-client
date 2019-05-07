@@ -72,9 +72,11 @@ class ItemCard extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      wishlist: this.props.wishlist
-    });
+    if (this.props.wishlist.error === undefined) {
+      this.setState({
+        wishlist: this.props.wishlist
+      });
+    }
   }
   handleExpandClick = () => {
     console.log(this.props.item);
@@ -220,7 +222,6 @@ class ItemCard extends React.Component {
             <Typography component="h3">
               Condtion: {this.props.item.condition}
             </Typography>
-            <Typography component="p">{this.props.item.description}</Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
             {this.state.wishlist.includes(this.props.item.id) ? (
@@ -245,9 +246,6 @@ class ItemCard extends React.Component {
               </IconButton>
             )}
 
-            <IconButton aria-label="Share">
-              <ShareIcon className={classes.shareIcon} />
-            </IconButton>
             <IconButton
               className={classnames(classes.expand, {
                 [classes.expandOpen]: this.state.expanded
@@ -261,17 +259,8 @@ class ItemCard extends React.Component {
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>Method:</Typography>
-              <Typography paragraph>What should we put here?</Typography>
-              <Typography paragraph>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </Typography>
+              <Typography>Description:</Typography>
+              <Typography paragraph>{this.props.item.description}</Typography>
             </CardContent>
           </Collapse>
         </Card>
