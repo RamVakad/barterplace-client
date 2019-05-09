@@ -1,11 +1,11 @@
 .AddItem {
-  
   display: block;
   width: 500px;
   background-color: white;
   padding: 30px;
-  top: 10vh;
-  margin-top: 10vh;
+  padding-top: 5px;
+  top: 5vh;
+  margin-top: 5vh;
   margin-left: auto;
   margin-right: auto;
 }

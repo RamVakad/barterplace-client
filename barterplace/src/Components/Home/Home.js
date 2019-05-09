@@ -49,19 +49,17 @@ class Home extends Component {
       page: 1,
       labelWidth: 0,
       condition: "",
-      category: ""
+      category: "",
+      item: ""
     };
   }
   handleChange = name => event => {
-    this.setState({ [name]: event.target.value,
-      page: 1
-     });
+    this.setState({ [name]: event.target.value, page: 1 });
     this.renderFilter();
   };
 
   componentDidMount() {
     const auth = sessionStorage.getItem("barterAuth");
-    //console.log(auth);
     if (auth !== null) {
       fetch(`https://hunterbarter.herokuapp.com/user`, {
         credentials: "same-origin",
@@ -76,6 +74,7 @@ class Home extends Component {
     }
   }
   rerender = () => {
+    console.log("called");
     this.setState({
       renderList: this.state.renderList
     });
@@ -116,6 +115,12 @@ class Home extends Component {
   renderFilter = () => {
     this.setState({
       renderList: "Filter"
+    });
+  };
+  renderSearch = item => {
+    this.setState({
+      renderList: "Search",
+      item: item
     });
   };
 
@@ -201,25 +206,25 @@ class Home extends Component {
             ))}
           </TextField>
           <TextField
-          select
-          label="Category"
-          value={this.state.category}
-          onChange={this.handleChange("category")}
-          SelectProps={{}}
-          helperText="Filter by category"
-          margin="normal"
-          variant="outlined"
-        >
-          {categories.map(option => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+            select
+            label="Category"
+            value={this.state.category}
+            onChange={this.handleChange("category")}
+            SelectProps={{}}
+            helperText="Filter by category"
+            margin="normal"
+            variant="outlined"
+          >
+            {categories.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           <br />
           {/* <FilterItem onChange ="alert(30);" /> */}
         </div>
-        <SearchBar />
+        <SearchBar search={this.renderSearch} />
 
         <ItemList
           renderList={this.state.renderList}
@@ -228,6 +233,7 @@ class Home extends Component {
           condition={this.state.condition}
           category={this.state.category}
           currpage={this.state.currpage}
+          name={this.state.item}
         />
         {this.state.page > 1 ? (
           <div>

@@ -18,18 +18,16 @@ class SeachBar extends Component {
   };
 
   onSubmitSearch = () => {
-    const auth = sessionStorage.getItem("barterAuth");
-    fetch(`https://hunterbarter.herokuapp.com/?search=${this.state.item}`, {
-      credentials: "same-origin",
-      method: "get",
-      headers: { "Content-Type": "application/json", Authorization: auth }
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log(data);
-        }
-      });
+    console.log("searching...", this.state.item);
+    if (this.state.item.length > 0) {
+      this.props.search(this.state.item);
+    } else alert("Enter something in searchbar");
+  };
+
+  handleKeyPress = event => {
+    if(event.key === 'Enter') {
+      this.onSubmitSearch();
+    }
   };
 
   render() {
@@ -45,6 +43,7 @@ class SeachBar extends Component {
           margin="normal"
           variant="outlined"
           onChange={this.onNameChange}
+          onKeyPress = {this.handleKeyPress}
         />
         <Button
           variant="contained"
@@ -52,7 +51,7 @@ class SeachBar extends Component {
           margin="normal"
           color="primary"
           className="searchButton"
-          onClick={this.onSumbitSearch}
+          onClick={this.onSubmitSearch}
         >
           Search
         </Button>

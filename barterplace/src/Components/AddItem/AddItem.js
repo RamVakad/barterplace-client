@@ -83,7 +83,7 @@ class AddItem extends Component {
         <TextField
           label="Description"
           multiline
-          rows="4"
+          rows="2"
           value={this.state.description}
           onChange={this.handleChange("description")}
           margin="normal"

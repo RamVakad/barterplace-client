@@ -8,10 +8,7 @@ class AddItem extends Component {
     super();
     this.state = {
       name: "",
-      phone: "",
-      selectedFile: null
-      //   condition: "",
-      //   category: ""
+      phone: ""
     };
   }
   componentDidMount() {
@@ -24,8 +21,6 @@ class AddItem extends Component {
   submitProfile = () => {
     const auth = sessionStorage.getItem("barterAuth");
     if (auth) {
-      //var form = new FormData();
-      //form.append("picture", this.state.selectedFile);
       fetch(
         `https://hunterbarter.herokuapp.com/user/update?name=${
           this.state.name
@@ -75,8 +70,6 @@ class AddItem extends Component {
           variant="outlined"
           fullWidth
         />
-        <h2>Add Image</h2>
-        <input type="file" onChange={this.fileSelectHandler} />
         <br />
         <div className="buttons">
           <Button

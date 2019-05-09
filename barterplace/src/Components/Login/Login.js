@@ -60,6 +60,12 @@ class Login extends Component {
       });
   };
 
+  handleKeyPress = event => {
+    if(event.key === 'Enter') {
+      this.onSubmitSignIn();
+    }
+  };
+
   render() {
     if (this.state.isAuthenticated === true) return <Redirect to="/" />;
 
@@ -92,6 +98,7 @@ class Login extends Component {
               margin="normal"
               variant="outlined"
               onChange={this.onPasswordChange}
+              onKeyPress = {this.handleKeyPress}
             />
           </div>
           <div>

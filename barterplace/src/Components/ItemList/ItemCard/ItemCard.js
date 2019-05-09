@@ -14,7 +14,6 @@ import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
 import blue from "@material-ui/core/colors/blue";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
@@ -214,7 +213,7 @@ class ItemCard extends React.Component {
           />
           <CardMedia
             className={classes.media}
-            image={"http://" + this.props.item.image}
+            image={"https://" + this.props.item.image}
             title={this.props.item.name}
           />
 
@@ -278,8 +277,8 @@ class ItemCard extends React.Component {
         <Modal open={this.state.contactModal} onClose={this.toggleContactModel}>
           <DialogContent>
             <div className="contactModal">
-              <h1>{this.state.userEmail}</h1>
-              <h1>{this.state.userPhone}</h1>
+              <p>{this.state.userEmail}</p>
+              <h2>{this.state.userPhone}</h2>
             </div>
           </DialogContent>
         </Modal>

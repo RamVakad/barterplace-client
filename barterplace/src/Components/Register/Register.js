@@ -65,6 +65,12 @@ class Register extends React.Component {
       });
   };
 
+  handleKeyPress = event => {
+    if(event.key === 'Enter') {
+      this.onSubmitRegister();
+    }
+  };
+
   render() {
     if (this.state.isAuthenticated === true) return <Redirect to="/" />;
 
@@ -113,6 +119,7 @@ class Register extends React.Component {
               margin="normal"
               variant="outlined"
               onChange={this.onPasswordChange}
+              onKeyPress = {this.handleKeyPress}
             />
           </div>
           <br />

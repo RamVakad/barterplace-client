@@ -28,6 +28,9 @@ class AddItem extends Component {
     } else if (nextProps.renderList === "Filter") {
       renderWishList = false;
       render = "filter";
+    } else if (nextProps.renderList === "Search") {
+      renderWishList = false;
+      render = "search";
     }
 
     const auth = sessionStorage.getItem("barterAuth");
@@ -44,8 +47,10 @@ class AddItem extends Component {
       }/${nextProps.page}?condition=${nextProps.condition}&category=${
         nextProps.category
       }`;
-    } else {
-      url = `https://hunterbarter.herokuapp.com/${render}/${nextProps.page}`;
+    } else if (nextProps.renderList === "Search") {
+      url = `https://hunterbarter.herokuapp.com/${render}?query=${
+        nextProps.name
+      }`;
     }
 
     fetch(url, {
